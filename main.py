@@ -59,17 +59,29 @@ def check_winner(board):
 
     return None
 
-if __name__ == "__main__":
+def check_draw(board):
+    return " " not in board
+
+def ask_restart():
+    while True:
+        answer = input("Сыграть ещё раз? (да/нет): ").strip().lower()
+
+        if answer in ("да", "д"):
+            return True
+        elif answer in ("нет", "н"):
+            return False
+        else:
+            print("Введите «да» или «нет».")
+
+def play_game():
     board = create_board()
     current_player = "X"
 
-    for turn in range(9):
+    while True:
         print_board(board)
-
         print(f"Ход игрока {current_player}")
 
         position = get_valid_move(board)
-
         board[position] = current_player
 
         winner = check_winner(board)
@@ -79,4 +91,22 @@ if __name__ == "__main__":
             print(f"Победил игрок {winner}!")
             break
 
+        if check_draw(board):
+            print_board(board)
+            print("Ничья!")
+            break
+
         current_player = switch_player(current_player)
+
+
+def main():
+    while True:
+        play_game()
+
+        if not ask_restart():
+            print("Спасибо за игру!")
+            break
+
+
+if __name__ == "__main__":
+    main()
