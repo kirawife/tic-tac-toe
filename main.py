@@ -35,12 +35,25 @@ def get_valid_move(board):
 
         return position
 
+def switch_player(current_player):
+    if current_player == "X":
+        return "O"
+    else:
+        return "X"
 
 if __name__ == "__main__":
     board = create_board()
-    print_board(board)
+    current_player = "X"
 
-    position = get_valid_move(board)
-    board[position] = "X"
+    for turn in range(9):
+        print_board(board)
+
+        print(f"Ход игрока {current_player}")
+
+        position = get_valid_move(board)
+
+        board[position] = current_player
+
+        current_player = switch_player(current_player)
 
     print_board(board)
